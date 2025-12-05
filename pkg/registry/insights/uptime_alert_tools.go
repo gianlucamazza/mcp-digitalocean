@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"mcp-digitalocean/pkg/response"
 
 	"github.com/digitalocean/godo"
 	"github.com/mark3labs/mcp-go/mcp"
@@ -49,12 +50,12 @@ func (u *UptimeCheckAlertTool) getUptimeCheckAlert(ctx context.Context, req mcp.
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonUptimeCheckAlert, err := json.MarshalIndent(uptimeCheckAlert, "", "  ")
+	jsonUptimeCheckAlert, err := response.CompactJSON(uptimeCheckAlert)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonUptimeCheckAlert)), nil
+	return mcp.NewToolResultText(jsonUptimeCheckAlert), nil
 }
 
 // listUptimeCheckAlerts lists UptimeChecks with pagination support
@@ -82,11 +83,11 @@ func (u *UptimeCheckAlertTool) listUptimeCheckAlerts(ctx context.Context, req mc
 	if err != nil {
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
-	jsonUptimeCheckAlerts, err := json.MarshalIndent(uptimeCheckAlerts, "", "  ")
+	jsonUptimeCheckAlerts, err := response.CompactJSON(uptimeCheckAlerts)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonUptimeCheckAlerts)), nil
+	return mcp.NewToolResultText(jsonUptimeCheckAlerts), nil
 }
 
 // createUptimeCheck creates a new UptimeCheck
@@ -146,12 +147,12 @@ func (u *UptimeCheckAlertTool) createUptimeCheckAlert(ctx context.Context, req m
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonUptimeCheckAlert, err := json.MarshalIndent(uptimeCheckAlert, "", "  ")
+	jsonUptimeCheckAlert, err := response.CompactJSON(uptimeCheckAlert)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonUptimeCheckAlert)), nil
+	return mcp.NewToolResultText(jsonUptimeCheckAlert), nil
 }
 
 // updateUptimeCheck updates a existing UptimeCheck
@@ -217,12 +218,12 @@ func (u *UptimeCheckAlertTool) updateUptimeCheckAlert(ctx context.Context, req m
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonUptimeCheck, err := json.MarshalIndent(uptimeCheck, "", "  ")
+	jsonUptimeCheck, err := response.CompactJSON(uptimeCheck)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonUptimeCheck)), nil
+	return mcp.NewToolResultText(jsonUptimeCheck), nil
 }
 
 // deleteUptimeCheck deletes a UptimeCheck

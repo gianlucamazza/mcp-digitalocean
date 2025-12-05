@@ -2,8 +2,8 @@ package networking
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
+	"mcp-digitalocean/pkg/response"
 
 	"github.com/digitalocean/godo"
 	"github.com/mark3labs/mcp-go/mcp"
@@ -41,12 +41,12 @@ func (p *PartnerAttachmentTool) createPartnerAttachment(ctx context.Context, req
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonAttachment, err := json.MarshalIndent(attachment, "", "  ")
+	jsonAttachment, err := response.CompactJSON(attachment)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonAttachment)), nil
+	return mcp.NewToolResultText(jsonAttachment), nil
 }
 
 // getPartnerAttachment fetches partner attachment information by ID
@@ -65,11 +65,11 @@ func (p *PartnerAttachmentTool) getPartnerAttachment(ctx context.Context, req mc
 	if err != nil {
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
-	jsonAttachment, err := json.MarshalIndent(attachment, "", "  ")
+	jsonAttachment, err := response.CompactJSON(attachment)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonAttachment)), nil
+	return mcp.NewToolResultText(jsonAttachment), nil
 }
 
 // listPartnerAttachments lists partner attachments with pagination support
@@ -92,11 +92,11 @@ func (p *PartnerAttachmentTool) listPartnerAttachments(ctx context.Context, req 
 	if err != nil {
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
-	jsonAttachments, err := json.MarshalIndent(attachments, "", "  ")
+	jsonAttachments, err := response.CompactJSON(attachments)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonAttachments)), nil
+	return mcp.NewToolResultText(jsonAttachments), nil
 }
 
 func (p *PartnerAttachmentTool) deletePartnerAttachment(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -127,12 +127,12 @@ func (p *PartnerAttachmentTool) getServiceKey(ctx context.Context, req mcp.CallT
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonServiceKey, err := json.MarshalIndent(serviceKey, "", "  ")
+	jsonServiceKey, err := response.CompactJSON(serviceKey)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonServiceKey)), nil
+	return mcp.NewToolResultText(jsonServiceKey), nil
 }
 
 func (p *PartnerAttachmentTool) getBGPConfig(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -148,12 +148,12 @@ func (p *PartnerAttachmentTool) getBGPConfig(ctx context.Context, req mcp.CallTo
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonBGPAuthKey, err := json.MarshalIndent(bgpAuthKey, "", "  ")
+	jsonBGPAuthKey, err := response.CompactJSON(bgpAuthKey)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonBGPAuthKey)), nil
+	return mcp.NewToolResultText(jsonBGPAuthKey), nil
 }
 
 func (p *PartnerAttachmentTool) updatePartnerAttachment(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -182,12 +182,12 @@ func (p *PartnerAttachmentTool) updatePartnerAttachment(ctx context.Context, req
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonAttachment, err := json.MarshalIndent(attachment, "", "  ")
+	jsonAttachment, err := response.CompactJSON(attachment)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonAttachment)), nil
+	return mcp.NewToolResultText(jsonAttachment), nil
 }
 
 func (p *PartnerAttachmentTool) Tools() []server.ServerTool {
