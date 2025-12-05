@@ -2,9 +2,9 @@ package doks
 
 import (
 	"context"
-	"mcp-digitalocean/pkg/response"
 	"encoding/json"
 	"fmt"
+	"mcp-digitalocean/pkg/response"
 	"strings"
 
 	"github.com/digitalocean/godo"

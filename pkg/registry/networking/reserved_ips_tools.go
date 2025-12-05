@@ -2,9 +2,9 @@ package networking
 
 import (
 	"context"
-	"mcp-digitalocean/pkg/response"
 	"errors"
 	"fmt"
+	"mcp-digitalocean/pkg/response"
 	"net/netip"
 
 	"github.com/digitalocean/godo"
