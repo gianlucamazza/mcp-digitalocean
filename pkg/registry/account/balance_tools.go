@@ -2,7 +2,7 @@ package account
 
 import (
 	"context"
-	"encoding/json"
+	"mcp-digitalocean/pkg/response"
 	"fmt"
 
 	"github.com/digitalocean/godo"
@@ -32,12 +32,12 @@ func (b *BalanceTools) getBalance(ctx context.Context, req mcp.CallToolRequest) 
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonData, err := json.MarshalIndent(balance, "", "  ")
+	jsonData, err := response.CompactJSON(balance)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonData)), nil
+	return mcp.NewToolResultText(jsonData), nil
 }
 
 // Tools returns the list of server tools for balance.

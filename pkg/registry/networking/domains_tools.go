@@ -2,7 +2,7 @@ package networking
 
 import (
 	"context"
-	"encoding/json"
+	"mcp-digitalocean/pkg/response"
 	"fmt"
 
 	"github.com/digitalocean/godo"
@@ -36,11 +36,11 @@ func (d *DomainsTool) getDomain(ctx context.Context, req mcp.CallToolRequest) (*
 	if err != nil {
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
-	jsonDomain, err := json.MarshalIndent(domain, "", "  ")
+	jsonDomain, err := response.CompactJSON(domain)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonDomain)), nil
+	return mcp.NewToolResultText(jsonDomain), nil
 }
 
 // listDomains lists domains with pagination support
@@ -63,11 +63,11 @@ func (d *DomainsTool) listDomains(ctx context.Context, req mcp.CallToolRequest) 
 	if err != nil {
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
-	jsonDomains, err := json.MarshalIndent(domains, "", "  ")
+	jsonDomains, err := response.CompactJSON(domains)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonDomains)), nil
+	return mcp.NewToolResultText(jsonDomains), nil
 }
 
 // getDomainRecord fetches a domain record by domain name and record ID
@@ -91,11 +91,11 @@ func (d *DomainsTool) getDomainRecord(ctx context.Context, req mcp.CallToolReque
 	if err != nil {
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
-	jsonRecord, err := json.MarshalIndent(record, "", "  ")
+	jsonRecord, err := response.CompactJSON(record)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonRecord)), nil
+	return mcp.NewToolResultText(jsonRecord), nil
 }
 
 // listDomainRecords lists domain records for a domain with pagination support
@@ -122,11 +122,11 @@ func (d *DomainsTool) listDomainRecords(ctx context.Context, req mcp.CallToolReq
 	if err != nil {
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
-	jsonRecords, err := json.MarshalIndent(records, "", "  ")
+	jsonRecords, err := response.CompactJSON(records)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonRecords)), nil
+	return mcp.NewToolResultText(jsonRecords), nil
 }
 
 func (d *DomainsTool) createDomain(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -148,12 +148,12 @@ func (d *DomainsTool) createDomain(ctx context.Context, req mcp.CallToolRequest)
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonDomain, err := json.MarshalIndent(domain, "", "  ")
+	jsonDomain, err := response.CompactJSON(domain)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonDomain)), nil
+	return mcp.NewToolResultText(jsonDomain), nil
 }
 
 func (d *DomainsTool) deleteDomain(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -194,12 +194,12 @@ func (d *DomainsTool) createRecord(ctx context.Context, req mcp.CallToolRequest)
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonRecord, err := json.MarshalIndent(record, "", "  ")
+	jsonRecord, err := response.CompactJSON(record)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonRecord)), nil
+	return mcp.NewToolResultText(jsonRecord), nil
 }
 
 func (d *DomainsTool) deleteRecord(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -242,12 +242,12 @@ func (d *DomainsTool) editRecord(ctx context.Context, req mcp.CallToolRequest) (
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonRecord, err := json.MarshalIndent(record, "", "  ")
+	jsonRecord, err := response.CompactJSON(record)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonRecord)), nil
+	return mcp.NewToolResultText(jsonRecord), nil
 }
 
 func (d *DomainsTool) Tools() []server.ServerTool {

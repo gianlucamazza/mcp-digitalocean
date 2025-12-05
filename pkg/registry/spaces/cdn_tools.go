@@ -2,7 +2,7 @@ package spaces
 
 import (
 	"context"
-	"encoding/json"
+	"mcp-digitalocean/pkg/response"
 	"fmt"
 
 	"github.com/digitalocean/godo"
@@ -39,12 +39,12 @@ func (c *CDNTool) getCDN(ctx context.Context, req mcp.CallToolRequest) (*mcp.Cal
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonCDN, err := json.MarshalIndent(cdn, "", "  ")
+	jsonCDN, err := response.CompactJSON(cdn)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonCDN)), nil
+	return mcp.NewToolResultText(jsonCDN), nil
 }
 
 // listCDNs lists CDNs with pagination support
@@ -67,11 +67,11 @@ func (c *CDNTool) listCDNs(ctx context.Context, req mcp.CallToolRequest) (*mcp.C
 	if err != nil {
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
-	jsonCDNs, err := json.MarshalIndent(cdns, "", "  ")
+	jsonCDNs, err := response.CompactJSON(cdns)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonCDNs)), nil
+	return mcp.NewToolResultText(jsonCDNs), nil
 }
 
 // createCDN creates a new CDN
@@ -94,12 +94,12 @@ func (c *CDNTool) createCDN(ctx context.Context, req mcp.CallToolRequest) (*mcp.
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonCDN, err := json.MarshalIndent(cdn, "", "  ")
+	jsonCDN, err := response.CompactJSON(cdn)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonCDN)), nil
+	return mcp.NewToolResultText(jsonCDN), nil
 }
 
 // deleteCDN deletes a CDN

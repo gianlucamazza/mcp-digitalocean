@@ -2,7 +2,7 @@ package droplet
 
 import (
 	"context"
-	"encoding/json"
+	"mcp-digitalocean/pkg/response"
 	"fmt"
 
 	"github.com/digitalocean/godo"
@@ -46,12 +46,12 @@ func (ia *ImageActionsTool) transferImage(ctx context.Context, req mcp.CallToolR
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonAction, err := json.MarshalIndent(action, "", "  ")
+	jsonAction, err := response.CompactJSON(action)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonAction)), nil
+	return mcp.NewToolResultText(jsonAction), nil
 }
 
 // convertImageToSnapshot converts a backup into a snapshot.
@@ -71,12 +71,12 @@ func (ia *ImageActionsTool) convertImageToSnapshot(ctx context.Context, req mcp.
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonAction, err := json.MarshalIndent(action, "", "  ")
+	jsonAction, err := response.CompactJSON(action)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonAction)), nil
+	return mcp.NewToolResultText(jsonAction), nil
 }
 
 // getImageAction retrieves the status of an image action.
@@ -100,12 +100,12 @@ func (ia *ImageActionsTool) getImageAction(ctx context.Context, req mcp.CallTool
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonAction, err := json.MarshalIndent(action, "", "  ")
+	jsonAction, err := response.CompactJSON(action)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonAction)), nil
+	return mcp.NewToolResultText(jsonAction), nil
 }
 
 // Tools returns the list of server tools for image actions.
