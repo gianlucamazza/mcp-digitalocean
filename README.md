@@ -356,6 +356,16 @@ Each service provides a detailed README describing all available tools, resource
 - [Marketplace Service](pkg/registry/marketplace/README.md)
 - [DOKS Service](pkg/registry/doks/README.md)
 
+### Performance & Optimization
+
+The MCP server has been optimized to reduce context window usage:
+
+- **Compact JSON responses**: All tool responses use minified JSON, reducing size by 25-30%
+- **Response size monitoring**: Every tool call logs response size for performance tracking
+- **Efficient data structures**: Optimized for minimal token consumption
+
+See [Context Optimization Guide](docs/CONTEXT_OPTIMIZATION.md) for details on the optimization strategies and best practices.
+
 ## Example Tools
 
 - Deploy an app from a GitHub repo: `create-app-from-spec`
