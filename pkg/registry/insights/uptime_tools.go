@@ -2,8 +2,8 @@ package insights
 
 import (
 	"context"
-	"mcp-digitalocean/pkg/response"
 	"fmt"
+	"mcp-digitalocean/pkg/response"
 
 	"github.com/digitalocean/godo"
 	"github.com/mark3labs/mcp-go/mcp"
