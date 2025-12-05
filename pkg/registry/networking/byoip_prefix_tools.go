@@ -2,7 +2,7 @@ package networking
 
 import (
 	"context"
-	"encoding/json"
+	"mcp-digitalocean/pkg/response"
 	"fmt"
 
 	"github.com/digitalocean/godo"
@@ -37,11 +37,11 @@ func (t *BYOIPPrefixTool) getBYOIPPrefix(ctx context.Context, req mcp.CallToolRe
 	if err != nil {
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
-	jsonData, err := json.MarshalIndent(byoipPrefix, "", "  ")
+	jsonData, err := response.CompactJSON(byoipPrefix)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonData)), nil
+	return mcp.NewToolResultText(jsonData), nil
 }
 
 // listBYOIPPrefix fetches BYOIP prefixes for a user
@@ -66,11 +66,11 @@ func (t *BYOIPPrefixTool) listBYOIPPrefix(ctx context.Context, req mcp.CallToolR
 	if err != nil {
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
-	jsonData, err := json.MarshalIndent(byoipPrefixes, "", "  ")
+	jsonData, err := response.CompactJSON(byoipPrefixes)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonData)), nil
+	return mcp.NewToolResultText(jsonData), nil
 }
 
 // createBYOIPPrefix creates a new BYOIP prefix for a user
@@ -104,11 +104,11 @@ func (t *BYOIPPrefixTool) createBYOIPPrefix(ctx context.Context, req mcp.CallToo
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonData, err := json.MarshalIndent(byoipPrefixCreated, "", "  ")
+	jsonData, err := response.CompactJSON(byoipPrefixCreated)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonData)), nil
+	return mcp.NewToolResultText(jsonData), nil
 }
 
 // getByOIPPrefixResources fetches resources for a BYOIP prefix
@@ -140,11 +140,11 @@ func (t *BYOIPPrefixTool) getByOIPPrefixResources(ctx context.Context, req mcp.C
 	if err != nil {
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
-	jsonData, err := json.MarshalIndent(byoipPrefixResources, "", "  ")
+	jsonData, err := response.CompactJSON(byoipPrefixResources)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonData)), nil
+	return mcp.NewToolResultText(jsonData), nil
 }
 
 // deleteBYOIPPrefix deletes BYOIP prefix by UUID

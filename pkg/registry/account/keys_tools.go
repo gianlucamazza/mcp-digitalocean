@@ -2,7 +2,7 @@ package account
 
 import (
 	"context"
-	"encoding/json"
+	"mcp-digitalocean/pkg/response"
 	"fmt"
 
 	"github.com/digitalocean/godo"
@@ -45,12 +45,12 @@ func (k *KeysTool) createKey(ctx context.Context, req mcp.CallToolRequest) (*mcp
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonKey, err := json.MarshalIndent(key, "", "  ")
+	jsonKey, err := response.CompactJSON(key)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonKey)), nil
+	return mcp.NewToolResultText(jsonKey), nil
 }
 
 func (k *KeysTool) deleteKey(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -85,11 +85,11 @@ func (k *KeysTool) getKey(ctx context.Context, req mcp.CallToolRequest) (*mcp.Ca
 	if err != nil {
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
-	jsonData, err := json.MarshalIndent(key, "", "  ")
+	jsonData, err := response.CompactJSON(key)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonData)), nil
+	return mcp.NewToolResultText(jsonData), nil
 }
 
 // listKeys lists SSH keys with pagination support.
@@ -112,11 +112,11 @@ func (k *KeysTool) listKeys(ctx context.Context, req mcp.CallToolRequest) (*mcp.
 	if err != nil {
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
-	jsonData, err := json.MarshalIndent(keys, "", "  ")
+	jsonData, err := response.CompactJSON(keys)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonData)), nil
+	return mcp.NewToolResultText(jsonData), nil
 }
 
 // Tools returns a list of tool functions

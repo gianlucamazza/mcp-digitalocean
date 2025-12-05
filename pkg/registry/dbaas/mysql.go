@@ -2,6 +2,7 @@ package dbaas
 
 import (
 	"context"
+	"mcp-digitalocean/pkg/response"
 	"encoding/json"
 	"fmt"
 	"strings"
@@ -35,11 +36,11 @@ func (s *MysqlTool) getMySQLConfig(ctx context.Context, req mcp.CallToolRequest)
 	if err != nil {
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
-	jsonCfg, err := json.MarshalIndent(cfg, "", "  ")
+	jsonCfg, err := response.CompactJSON(cfg)
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
-	return mcp.NewToolResultText(string(jsonCfg)), nil
+	return mcp.NewToolResultText(jsonCfg), nil
 }
 
 func (s *MysqlTool) updateMySQLConfig(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {

@@ -2,7 +2,7 @@ package account
 
 import (
 	"context"
-	"encoding/json"
+	"mcp-digitalocean/pkg/response"
 	"fmt"
 
 	"github.com/digitalocean/godo"
@@ -31,12 +31,12 @@ func (a *AccountTools) getAccountInformation(ctx context.Context, req mcp.CallTo
 		return mcp.NewToolResultErrorFromErr("api error", err), nil
 	}
 
-	jsonData, err := json.MarshalIndent(account, "", "  ")
+	jsonData, err := response.CompactJSON(account)
 	if err != nil {
 		return nil, fmt.Errorf("error marshalling account: %w", err)
 	}
 
-	return mcp.NewToolResultText(string(jsonData)), nil
+	return mcp.NewToolResultText(jsonData), nil
 }
 
 func (a *AccountTools) Tools() []server.ServerTool {
